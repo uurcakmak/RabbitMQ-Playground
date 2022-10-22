@@ -1,6 +1,4 @@
-﻿using RabbitMQ.Domain.Enums;
-
-namespace RabbitMQ.Domain.Models;
+﻿namespace RabbitMQ.Domain.Models;
 
 public class Message
 {

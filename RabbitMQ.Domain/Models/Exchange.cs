@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using RabbitMQ.Domain.Enums;
-
-namespace RabbitMQ.Domain.Models
+﻿namespace RabbitMQ.Domain.Models
 {
     public class Exchange
     {
