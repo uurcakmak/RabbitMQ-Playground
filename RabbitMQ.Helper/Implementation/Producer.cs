@@ -42,7 +42,10 @@ public class Producer : IProducer
         string result = string.Empty;
         try
         {
-            _channel.QueueDeclare(queue.Name, queue.Durable, queue.Exclusive, queue.AutoDelete);
+            _channel.QueueDeclare(queue.Name, 
+                queue.Durable, 
+                queue.Exclusive, 
+                queue.AutoDelete);
         }
         catch (Exception e)
         {
@@ -57,7 +60,10 @@ public class Producer : IProducer
         string result = string.Empty;
         try
         {
-            _channel.ExchangeDeclare(exchange.Name, exchange.Type, exchange.Durable, exchange.AutoDelete);
+            _channel.ExchangeDeclare(exchange.Name, 
+                exchange.Type, 
+                exchange.Durable, 
+                exchange.AutoDelete);
         }
         catch (Exception e)
         {

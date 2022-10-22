@@ -2,6 +2,7 @@
 using RabbitMQ.Helper.Abstraction;
 using RestSharp;
 using RestSharp.Authenticators;
+#pragma warning disable CS8603
 
 namespace RabbitMQ.Helper.Implementation
 {

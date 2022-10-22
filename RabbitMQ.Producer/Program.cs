@@ -80,8 +80,12 @@ namespace RabbitMQ.Producer
                 options.Cookie.SameSite = SameSiteMode.Strict;
             });
 
-            services.AddSingleton<IProducer>(_ => new Helper.Implementation.Producer(config["RabbitMQ:ConnectionString"]));
-            services.AddSingleton<IRabbitApi>(_ => new Helper.Implementation.RabbitApi(config["RabbitMQ:ApiUrl"], config["RabbitMQ:Username"], config["RabbitMQ:Password"]));
+            services.AddSingleton<IProducer>(_ => new Helper.Implementation.Producer(
+                config["RabbitMQ:ConnectionString"]));
+            services.AddSingleton<IRabbitApi>(_ => new Helper.Implementation.RabbitApi(
+                    config["RabbitMQ:ApiUrl"], 
+                    config["RabbitMQ:Username"], 
+                    config["RabbitMQ:Password"]));
         }
     }
 }
