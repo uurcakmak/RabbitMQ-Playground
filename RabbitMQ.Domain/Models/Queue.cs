@@ -1,12 +1,15 @@
-﻿namespace RabbitMQ.Domain.Models;
+﻿using Newtonsoft.Json;
+
+namespace RabbitMQ.Domain.Models;
 
 public class Queue
 {
     public string Name { get; set; }
 
-    public bool Durability { get; set; } = false;
+    public bool Durable { get; set; } = false;
 
-    public bool Exclusivity { get; set; } = false;
+    public bool Exclusive { get; set; } = false;
 
+    [JsonProperty("auto_delete")]
     public bool AutoDelete { get; set; } = false;
 }

@@ -1,8 +1,159 @@
-﻿@{
+﻿@model RabbitMQ.Domain.ViewModel.HomeVM
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="card">
+    <div class="card-header pb-0 mb-0">
+        <ul class="nav nav-tabs fs-6 border-0">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Kuyruk Tanımları</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab2">Exchange Tanımları</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                <table class="table table-bordered table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#newQueue">
+                                    Yeni Kuyruk
+                                </button>
+                            </th>
+                            <th>
+                                Kuyruk Adı
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbQL">
+                        @await Html.PartialAsync("Partials/_QueueList", Model.Queues)
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="tab2" role="tabpanel">
+                <table class="table table-bordered table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#newExchange">
+                                    Yeni Exchange
+                                </button>
+                            </th>
+                            <th>
+                                Exchange Tipi
+                            </th>
+                            <th>
+                                Exchange Adı
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbEL">
+                        @await Html.PartialAsync("Partials/_ExchangeList", Model.Exchanges)
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+                3
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade" id="newQueue" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newQueueLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newQueueLabel">Yeni Kuyruk Tanımı</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="newQueueFrm" asp-controller="Home"
+                  asp-action="CreateQueue"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-complete="onQueueSave">
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="Name" class="col-sm-3 col-form-label">Kuyruk Adı</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#newQueue" aria-label="Kaydet">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newExchange" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newExchangeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newExchangeLabel">Yeni Exchange Tanımı</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="newExchangeFrm"
+                  asp-controller="Home"
+                  asp-action="CreateExchange"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-complete="onExcSave">
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="Name" class="col-sm-3 col-form-label">Exchange Adı</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="Name" name="Name">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="Type" class="col-sm-3 col-form-label">Exchange Tipi</label>
+                        <div class="col-sm-9">
+                            <select class="form-select form-select mb-3" id="Type" name="Type">
+                                <option>Seçiniz</option>
+                                <option value="direct">Direct</option>
+                                <option value="topic">Topic</option>
+                                <option value="fanout">FanOut</option>
+                                <option value="headers">Headers</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#newExchange" aria-label="Kaydet">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function onQueueSave(xhr) {
+        $("#newQueue input[id='Name']").val('');
+        $("#tbQL").html(xhr.responseText);
+    }
+
+    function onExcSave(xhr) {
+        $("#newExchange input[id='Name']").val('');
+        $("#tbEL").html(xhr.responseText);
+    }
+
+    function bindQueue(name) {
+        $.when(window.makeXHR("@Url.Action("BindQueue","Home")", "GET", { queueName: name })).then(function (response) {
+            window.CreateModal("mdlBQ", "Kuruk-Exchange Bağlantısı", response, "md");
+        });
+    }
+
+    function sendMessage() {
+        $.when(window.makeXHR("@Url.Action("Message","Home")", "GET", null)).then(function (response) {
+            window.CreateModal("mdlMsg", "Mesaj Gönder", response, "md");
+        });
+    }
+</script>

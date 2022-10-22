@@ -4,14 +4,14 @@ namespace RabbitMQ.Domain.Models;
 
 public class Message
 {
-    public Message(Exchange exchange, string routingKey, object content)
+    public Message(string exchange, string routingKey, string content)
     {
         Exchange = exchange;
         RoutingKey = routingKey;
         Content = content;
     }
 
-    public Message(Exchange exchange, string routingKey, Dictionary<string, string>? headers, object content)
+    public Message(string exchange, string routingKey, Dictionary<string, string>? headers, string content)
     {
         Exchange = exchange;
         RoutingKey = routingKey;
@@ -19,7 +19,11 @@ public class Message
         Content = content;
     }
 
-    public Exchange Exchange { get; set; }
+    public Message()
+    {
+    }
+
+    public string Exchange { get; set; }
 
     public string RoutingKey { get; set; }
 
@@ -27,9 +31,9 @@ public class Message
 
     public Dictionary<string, string>? Headers
     {
-        get => Exchange.Type == ExchangeTypes.Headers ? this._headers : null;
-        set => _headers = Exchange.Type == ExchangeTypes.Headers ? value : null;
+        get => Exchange == "headers" ? this._headers : null;
+        set => _headers = Exchange == "headers" ? value : null;
     }
 
-    public object Content { get; set; }
+    public string Content { get; set; }
 }

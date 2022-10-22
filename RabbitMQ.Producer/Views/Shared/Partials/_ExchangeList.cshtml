@@ -1,0 +1,12 @@
+﻿@model List<RabbitMQ.Domain.Models.Exchange>
+@{
+    foreach (var item in Model.Where(e => !string.IsNullOrEmpty(e.Name)))
+    {
+        <tr>
+            <td class="w-25">
+            </td>
+            <td class="w-10">@item.Type</td>
+            <td class="w-auto">@item.Name</td>
+        </tr>
+    }
+}

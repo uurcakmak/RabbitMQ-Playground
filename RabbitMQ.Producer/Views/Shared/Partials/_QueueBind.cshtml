@@ -1,0 +1,50 @@
+﻿@model RabbitMQ.Domain.Models.QueueBind
+<form id="newQueueFrm" asp-controller="Home"
+      asp-action="BindQueue"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-complete="onQueueBind">
+    <div class="mb-3 row">
+        <label asp-for="Name" class="col-sm-3 col-form-label">Kuyruk Adı</label>
+        <div class="col-sm-9">
+            <input asp-for="Name" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label asp-for="Exchange" class="col-sm-3 col-form-label">Exchange Adı</label>
+        <div class="col-sm-9">
+            <select class="form-control" asp-for="Exchange">
+                <option>Seçiniz</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label asp-for="RoutingKey" class="col-sm-3 col-form-label">Routing Key</label>
+        <div class="col-sm-9">
+            <input asp-for="RoutingKey" type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Kaydet</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.when(window.makeXHR("@Url.Action("ExchangeList","Home")", "GET", null)).then(function (response) {
+            var s = '';
+            for (var i = 0; i < response.length; i++) {
+                console.log(response[i])
+                s += '<option value="' + response[i].Name + '">' + response[i].Name + '</option>';
+            }
+            $("select[id='Exchange']").html(s);
+        });
+    });
+
+    function onQueueBind(result) {
+        if (result.responseJSON === '') {
+            window.hideModal('mdlBQ');
+        }
+    }
+</script>

@@ -1,0 +1,18 @@
+﻿@model List<RabbitMQ.Domain.Models.Queue>
+@{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td class="w-25">
+                <button class="btn btn-sm btn-primary" onclick="bindQueue('@item.Name');">
+                    Exchange'e Bağla
+                </button>
+                <button class="btn btn-sm btn-success" onclick="sendMessage();">
+                    Mesaj Gönder
+                </button>
+            </td>
+            <td class="w-auto">@item.Name</td>
+        </tr>
+    }
+
+}

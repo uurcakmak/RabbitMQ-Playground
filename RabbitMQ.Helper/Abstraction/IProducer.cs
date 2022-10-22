@@ -11,12 +11,12 @@ namespace RabbitMQ.Helper.Abstraction
     public interface IProducer
     {
         //void SendMessage<T>(T message);
-        void CreateQueue(Queue queue);
+        string CreateQueue(Queue queue);
 
-        void CreateExchange(Exchange exchange);
+        string CreateExchange(Exchange exchange);
 
-        void BindQueue(QueueBind queueBind);
+        string BindQueue(QueueBind queueBind);
 
-        void PublishMessage(Message message);
+        string PublishMessage(Message message);
     }
 }

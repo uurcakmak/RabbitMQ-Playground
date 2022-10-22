@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using System.Text;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
+using RabbitMQ.Helper.Abstraction;
 
 namespace RabbitMQ.Consumer;
 
@@ -11,6 +12,7 @@ internal class Program
     private static IConnectionFactory? _connectionFactory;
     private static IConnection? _connection;
     private static IModel? _channel;
+    private readonly IRabbitApi _api;
 
     static void Main(string[] args)
     {

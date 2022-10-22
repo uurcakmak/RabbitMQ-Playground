@@ -4,11 +4,20 @@ namespace RabbitMQ.Domain.Models;
 
 public class QueueBind
 {
-    public QueueBind(string name, Exchange exchange, string routingKey)
+    public QueueBind(string name)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+    }
+
+    public QueueBind(string name, string exchange, string routingKey)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Exchange = exchange ?? throw new ArgumentNullException(nameof(exchange));
         RoutingKey = routingKey ?? throw new ArgumentNullException(nameof(routingKey));
+    }
+
+    public QueueBind()
+    {
     }
 
     /// <summary>
@@ -21,7 +30,7 @@ public class QueueBind
     /// Exchange
     /// </summary>
     [Required]
-    public Exchange Exchange { get; set; }
+    public string Exchange { get; set; }
 
     /// <summary>
     /// Exchange Tipi için routing-key 

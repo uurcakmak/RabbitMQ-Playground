@@ -6,9 +6,8 @@
     <title>@ViewData["Title"] - RabbitMQ.Producer</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/RabbitMQ.Producer.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex flex-column">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -22,9 +21,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -35,15 +31,12 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - RabbitMQ.Producer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" asp-append-version="true" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" asp-append-version="true" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" asp-append-version="true" src="~/js/site.min.js"></script>
+    <script type="text/javascript" asp-append-version="true" src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.min.js")"></script>
+    <script type="text/javascript" asp-append-version="true" src="@Url.Content("~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js")"></script>
+    <script type="text/javascript" asp-append-version="true" src="@Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

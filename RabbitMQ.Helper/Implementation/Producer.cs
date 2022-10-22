@@ -37,25 +37,66 @@ public class Producer : IProducer
         return _connection.CreateModel();
     }
 
-    public void CreateQueue(Queue queue)
+    public string CreateQueue(Queue queue)
     {
-        _channel.QueueDeclare(queue.Name, queue.Durability, queue.Exclusivity, queue.AutoDelete);
+        string result = string.Empty;
+        try
+        {
+            _channel.QueueDeclare(queue.Name, queue.Durable, queue.Exclusive, queue.AutoDelete);
+        }
+        catch (Exception e)
+        {
+            result = e.Message;
+        }
+
+        return result;
     }
 
-    public void CreateExchange(Exchange exchange)
+    public string CreateExchange(Exchange exchange)
     {
-        _channel.ExchangeDeclare(exchange.Name, JsonConvert.SerializeObject(exchange.Type), exchange.Durability, exchange.AutoDelete);
+        string result = string.Empty;
+        try
+        {
+            _channel.ExchangeDeclare(exchange.Name, exchange.Type, exchange.Durable, exchange.AutoDelete);
+        }
+        catch (Exception e)
+        {
+            result = e.Message;
+        }
+
+        return result;
     }
 
-    public void BindQueue(QueueBind queueBind)
+    public string BindQueue(QueueBind queueBind)
     {
-        _channel.QueueBind(queueBind.Name, queueBind.Exchange.Name, queueBind.RoutingKey);
+        string result = string.Empty;
+        try
+        {
+            _channel.QueueBind(queueBind.Name, queueBind.Exchange, queueBind.RoutingKey);
+        }
+        catch (Exception e)
+        {
+            result = e.Message;
+        }
+
+        return result;
     }
 
-    public void PublishMessage(Message message)
+    public string PublishMessage(Message message)
     {
-        var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message.Content));
+        string result = string.Empty;
         
-        _channel.BasicPublish(message.Exchange.Name, message.RoutingKey, true, null, body);
+        try
+        {
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message.Content));
+
+            _channel.BasicPublish(message.Exchange, message.RoutingKey, true, null, body);
+        }
+        catch (Exception e)
+        {
+            result = e.Message;
+        }
+
+        return result;
     }
 }
