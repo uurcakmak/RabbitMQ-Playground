@@ -78,7 +78,9 @@ public class Producer : IProducer
         string result = string.Empty;
         try
         {
-            _channel.QueueBind(queueBind.Name, queueBind.Exchange, queueBind.RoutingKey);
+            _channel.QueueBind(queueBind.Name, 
+                queueBind.Exchange, 
+                queueBind.RoutingKey);
         }
         catch (Exception e)
         {
@@ -94,9 +96,14 @@ public class Producer : IProducer
         
         try
         {
-            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message.Content));
+            var body = 
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message.Content));
 
-            _channel.BasicPublish(message.Exchange, message.RoutingKey, true, null, body);
+            _channel.BasicPublish(message.Exchange, 
+                message.RoutingKey, 
+                true, 
+                null, 
+                body);
         }
         catch (Exception e)
         {

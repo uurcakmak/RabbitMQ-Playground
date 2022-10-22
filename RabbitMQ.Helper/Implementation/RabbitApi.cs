@@ -18,14 +18,18 @@ namespace RabbitMQ.Helper.Implementation
 
         public async Task<List<Queue>> ListQueues()
         {
-            var request = await _client.GetAsync<List<Queue>>(new RestRequest("queues")).WaitAsync(CancellationToken.None);
+            var request = 
+                await _client.GetAsync<List<Queue>>(new RestRequest("queues"))
+                    .WaitAsync(CancellationToken.None);
 
             return request;
         }
 
         public async Task<List<Exchange>> ListExchanges()
         {
-            var request = await _client.GetAsync<List<Exchange>>(new RestRequest("exchanges")).WaitAsync(CancellationToken.None);
+            var request = 
+                await _client.GetAsync<List<Exchange>>(new RestRequest("exchanges"))
+                    .WaitAsync(CancellationToken.None);
 
             return request?.Where(s => !string.IsNullOrEmpty(s.Name)).ToList();
         }
