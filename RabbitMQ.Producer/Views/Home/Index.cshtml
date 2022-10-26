@@ -82,7 +82,7 @@
                     <div class="mb-3 row">
                         <label for="Name" class="col-sm-3 col-form-label">Kuyruk Adı</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="Name">
+                            <input type="text" class="form-control" id="Name" name="Name">
                         </div>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
 
     function bindQueue(name) {
         $.when(window.makeXHR("@Url.Action("BindQueue","Home")", "GET", { queueName: name })).then(function (response) {
-            window.CreateModal("mdlBQ", "Kuruk-Exchange Bağlantısı", response, "md");
+            window.CreateModal("mdlBQ", "Kuyruk-Exchange Bağlantısı", response, "md");
         });
     }
 
